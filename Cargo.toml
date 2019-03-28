@@ -1,0 +1,9 @@
+[package]
+name = "page-expander"
+version = "0.1.0"
+authors = ["Konstantin Kostov <konstantin@headbright.be>"]
+edition = "2018"
+
+[dependencies]
+serde = "1.0.89"
+serde_json = "1.0.39"
