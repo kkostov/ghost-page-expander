@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{{ post.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="{{ post.title }}">
+    <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            async
+            href="/assets/main.css"
+    />
+<body>
+<header>
+    <ul class="social">
+        <li>
+            <a href="/blog" class="active"><span>Posts</span></a>
+        </li>
+        <li>
+            <a href="/labs"><span>Labs</span></a>
+        </li>
+        <li>
+            <a href="https://twitter.com/kkostov">
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="23"
+                        height="19"
+                        viewBox="0 0 23 19"
+                >
+                    <title>Twitter</title>
+                    <path
+                            d="M23,6.628 L21,6.128 L22,4.128 L19.536,4.828 C18.2285046,3.60820888 16.3208706,3.28274876 14.6828951,4.0000151 C13.0449197,4.71728144 11.9903408,6.33988887 12,8.128 L12,9.128 C8.461,9.858 5.366,7.928 2.5,4.628 C2,7.29466667 2.5,9.29466667 4,10.628 L1,10.128 C1.405,12.197 2.362,13.828 5,14.128 L2.5,15.128 C3.5,17.128 5.066,17.438 7.5,17.628 C5.60691968,18.9806353 3.32602899,19.6824479 1,19.628 C13.755,25.297 21,16.964 21,9.628 L21,8.3 L23,6.628 Z"
+                            transform="translate(0 -3)"></path>
+                </svg>
+            </a>
+        </li>
+    </ul>
+</header>
+<main>
+    <article class="post">
+        <h1>{{ post.title }}</h1>
+        <time>{{ post.published_at }}</time>
+        {{ post.html }}
+    </article>
+</main>
+</body>
+</html>

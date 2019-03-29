@@ -6,6 +6,12 @@ use std::ffi::OsStr;
 use serde_json::Value;
 use std::io::Read;
 
+#[macro_use]
+extern crate lazy_static;
+extern crate tera;
+
+use tera::*;
+
 fn main() {
     println!("Hello, world!");
 
@@ -52,8 +58,31 @@ fn get_database(path: &String) -> Option<Value> {
     return None;
 }
 
+
+lazy_static! {
+    pub static ref TERA: tera::Tera = {
+        let mut tera = tera::compile_templates!("templates/*.html");
+        tera.autoescape_on(vec![]);
+        tera
+    };
+}
+
 fn parse_root(path: &String) {
+
     if let Some(json) = get_database(path) {
-        println!("found version {}", json["meta"]["version"]);
+        if let Some(posts) = json["data"]["posts"].as_array() {
+            for post in posts {
+                println!("found post {:?}", post["title"]);
+                let title = post["title"].as_str();
+
+                let mut context = Context::new();
+                context.insert("post", post);
+
+                match TERA.render("post.html", &context) {
+                    Ok(result) => {println!("rendered: {:?}", result);},
+                    Err(err) => {println!("failed to render: {:?}", err);},
+                }
+            }
+        }
     }
 }
