@@ -14,6 +14,8 @@ use tera::*;
 extern crate chrono;
 use chrono::{DateTime, NaiveDateTime, Utc};
 
+extern crate htmlstream;
+
 
 fn main() {
 
@@ -80,6 +82,7 @@ static TEMPLATE_NAME_POST: &str = "post.html";
 
 
 
+
 /// Reads a ghost back-up folder structure and renders all published posts
 fn parse_root(path: &String, templates_path: &String, output_path: &String) {
 
@@ -101,6 +104,7 @@ fn parse_root(path: &String, templates_path: &String, output_path: &String) {
 
 
                     let content = render_content(templates_path, TEMPLATE_NAME_POST, &context);
+                    let _ = get_img_links(&content);
                     write_content(&content, &post_folder_path);
 
                 } else {
@@ -161,4 +165,33 @@ fn write_content(content: &String, write_dir_path: &Path) {
             panic!("failed to create output path {:?} {:?}", write_dir_path, err);
         },
     }
+}
+
+static HTML_TAG_IMG: &str = "img";
+static HTML_ATTRIBUTE_IMG_SOURCE: &str = "src";
+
+#[derive(Debug)]
+struct MediaLink {
+    /// Position of the beginning of the html tag, e.g. that '<' of '<img src...'
+    position: htmlstream::Position,
+    url: String
+}
+
+fn get_img_links(content: &String) -> Vec<MediaLink> {
+    let mut results: Vec<MediaLink> = vec![];
+
+    for (pos, tag) in htmlstream::tag_iter(content) {
+        if tag.name == HTML_TAG_IMG {
+            if let Some((_, attr_src)) =
+            htmlstream::attr_iter(&tag.attributes)
+                .find(|(_, attr)| attr.name == HTML_ATTRIBUTE_IMG_SOURCE) {
+
+                let media_link = MediaLink { position: pos, url: attr_src.value };
+                println!("media link {:?}", media_link);
+                results.push(media_link);
+            }
+        }
+    }
+
+    results
 }
