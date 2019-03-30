@@ -42,7 +42,7 @@
 <main>
     <article class="post">
         <h1>{{ post.title }}</h1>
-        <time>{{ post.published_at }}</time>
+        <time>{{ published_at | date(format="%d %B %Y") }}</time>
         {{ post.html }}
     </article>
 </main>

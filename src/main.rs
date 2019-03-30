@@ -96,6 +96,9 @@ fn parse_root(path: &String, templates_path: &String, output_path: &String) {
                     let mut context = Context::new();
                     context.insert("post", post);
 
+                    let published_at = timestamp / 1000;
+                    context.insert("published_at", &published_at); // so the chrono formatters in the template can work
+
 
                     let content = render_content(templates_path, TEMPLATE_NAME_POST, &context);
                     write_content(&content, &post_folder_path);
