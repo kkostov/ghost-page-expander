@@ -4,16 +4,18 @@ use std::path::Path;
 use std::panic;
 use std::ffi::OsStr;
 use serde_json::Value;
-use std::io::Read;
+use std::io::{Read, Write};
+use std::fs;
 
-#[macro_use]
-extern crate lazy_static;
 extern crate tera;
-
 use tera::*;
 
+
+extern crate chrono;
+use chrono::{DateTime, NaiveDateTime, Utc};
+
+
 fn main() {
-    println!("Hello, world!");
 
     let args: Vec<String> = env::args().collect();
     println!("{:?}", args);
@@ -23,7 +25,21 @@ fn main() {
             panic!("expected argument path to the root content folder of a Ghost backup");
         },
         Some(file_path) => {
-            parse_root(file_path);
+            match args.get(2) {
+                None => {
+                    panic!("expected second argument glob pattern path to the template folder e.g. './templates/*.html'");
+                },
+                Some(template_path) => {
+                    match args.get(3) {
+                        None => {
+                            panic!("expected third argument path to the output root folder");
+                        },
+                        Some(output_path) => {
+                            parse_root(file_path, template_path, output_path);
+                        },
+                    }
+                },
+            }
         },
     }
 }
@@ -59,30 +75,87 @@ fn get_database(path: &String) -> Option<Value> {
 }
 
 
-lazy_static! {
-    pub static ref TERA: tera::Tera = {
-        let mut tera = tera::compile_templates!("templates/*.html");
-        tera.autoescape_on(vec![]);
-        tera
-    };
-}
+static OUTPUT_PAGE_FILENAME: &str = "index.html";
+static TEMPLATE_NAME_POST: &str = "post.html";
 
-fn parse_root(path: &String) {
+
+
+/// Reads a ghost back-up folder structure and renders all published posts
+fn parse_root(path: &String, templates_path: &String, output_path: &String) {
 
     if let Some(json) = get_database(path) {
         if let Some(posts) = json["data"]["posts"].as_array() {
             for post in posts {
-                println!("found post {:?}", post["title"]);
-                let title = post["title"].as_str();
 
-                let mut context = Context::new();
-                context.insert("post", post);
+                if let Some(timestamp) = post["published_at"].as_i64() {
 
-                match TERA.render("post.html", &context) {
-                    Ok(result) => {println!("rendered: {:?}", result);},
-                    Err(err) => {println!("failed to render: {:?}", err);},
+                    let post_folder = get_content_folder(timestamp);
+                    let post_folder_path = Path::new(output_path).join(post_folder);
+
+
+                    let mut context = Context::new();
+                    context.insert("post", post);
+
+
+                    let content = render_content(templates_path, TEMPLATE_NAME_POST, &context);
+                    write_content(&content, &post_folder_path);
+
+                } else {
+                    println!("skipping unpublished post {:?} {:?}", post["id"], post["title"]);
                 }
             }
         }
+    }
+}
+
+/// Given a JavaScript timestamp (millis Unix epoch time) returns a post folder name
+fn get_content_folder(timestamp: i64) -> String {
+    let timestamp_sec = timestamp / 1000;
+    let naive = NaiveDateTime::from_timestamp(timestamp_sec, 0);
+    let datetime = DateTime::<Utc>::from_utc(naive, Utc);
+    datetime.format("post-%Y-%m-%d").to_string()
+}
+
+/// Generates a content string by inflating the specified template using the provided context data
+fn render_content(
+    templates_path: &String,
+    template_name: &str,
+    tera_context: &Context) -> String {
+
+    let mut tera: Tera = compile_templates!(templates_path);
+    tera.autoescape_on(vec![]);
+
+    match tera.render(template_name, tera_context) {
+        Ok(content) => {
+            return content;
+        },
+        Err(err) => {panic!("failed to render: {:?}", err);},
+    }
+}
+
+/// Writes the content string to disk
+fn write_content(content: &String, write_dir_path: &Path) {
+    // ensure the folder doesn't exist (and it's empty)
+    if write_dir_path.exists() {
+        fs::remove_dir_all(write_dir_path).expect("failed to delete output path");
+    }
+
+    // create the folder and write out the index
+    match fs::create_dir_all(write_dir_path) {
+        Ok(_) => {
+            let output_file_path = write_dir_path.join(OUTPUT_PAGE_FILENAME);
+            match File::create(output_file_path) {
+                Ok(mut file) => {
+                    file.write_all(content.as_bytes()).expect("failed to write to file");
+                },
+                Err(err) => {
+                    panic!("failed to create file {:?} in output path {:?} {:?}", OUTPUT_PAGE_FILENAME, write_dir_path, err);
+                },
+            }
+
+        },
+        Err(err) => {
+            panic!("failed to create output path {:?} {:?}", write_dir_path, err);
+        },
     }
 }
