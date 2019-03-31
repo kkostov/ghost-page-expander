@@ -14,10 +14,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d589f107-7b54-4c99-ab94-264e648218da" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/headbrightk.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/headbrightk.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,30 +26,32 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ghost.db" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="142" column="32" selection-start-line="142" selection-start-column="32" selection-end-line="142" selection-end-column="32" />
-              <folding>
-                <element signature="e#4526#5418#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1368614b-f6d0-4ce1-93ee-b790c29758da/console.sql">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.cargo/registry/src/github.com-1ecc6299db9ec823/htmlstream-0.1.3/src/base.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+            <state relative-caret-position="732">
+              <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
             </state>
           </provider>
         </entry>
@@ -65,6 +64,7 @@
       <find>&lt;p&gt;</find>
       <find>&lt;img src=</find>
       <find>&lt;img src</find>
+      <find>b6315d77-315e-4dbf-b23a-bd5d19d62deb</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -88,10 +88,11 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="970" />
-    <option name="width" value="950" />
-    <option name="height" value="1080" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="13" />
+    <option name="y" value="49" />
+    <option name="width" value="1277" />
+    <option name="height" value="846" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -105,27 +106,6 @@
             <path>
               <item name="page-expander" type="b2602c69:ProjectViewProjectNode" />
               <item name="page-expander" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="page-expander" type="b2602c69:ProjectViewProjectNode" />
-              <item name="page-expander" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="page-expander" type="b2602c69:ProjectViewProjectNode" />
-              <item name="page-expander" type="462c0819:PsiDirectoryNode" />
-              <item name="output" type="462c0819:PsiDirectoryNode" />
-              <item name="post-2015-02-18" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="page-expander" type="b2602c69:ProjectViewProjectNode" />
-              <item name="page-expander" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="page-expander" type="b2602c69:ProjectViewProjectNode" />
-              <item name="page-expander" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -175,7 +155,7 @@
     </configuration>
     <configuration name="Run with path" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
-      <option name="command" value="run --package page-expander --bin page-expander &quot;$USER_HOME$/Downloads/OneDrive-2019-03-27/content&quot; &quot;$PROJECT_DIR$/templates/*.html&quot; &quot;$PROJECT_DIR$/output&quot;" />
+      <option name="command" value="run --package page-expander --bin page-expander &quot;$USER_HOME$/blog/content&quot; &quot;$PROJECT_DIR$/templates/*.html&quot; &quot;$PROJECT_DIR$/output&quot;" />
       <option name="allFeatures" value="false" />
       <option name="nocapture" value="false" />
       <option name="backtrace" value="SHORT" />
@@ -209,7 +189,8 @@
       <workItem from="1553753192855" duration="2147000" />
       <workItem from="1553827571813" duration="3243000" />
       <workItem from="1553843198629" duration="150000" />
-      <workItem from="1553934009609" duration="7998000" />
+      <workItem from="1553934009609" duration="9508000" />
+      <workItem from="1554017718679" duration="322000" />
     </task>
     <task id="LOCAL-00001" summary="Use Tera to parse the posts">
       <created>1553840648975</created>
@@ -232,25 +213,30 @@
       <option name="project" value="LOCAL" />
       <updated>1553940363651</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="List images in the rendered html output">
+      <created>1553946217828</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1553946217828</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14672000" />
+    <option name="totallyTimeSpent" value="16504000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="927" y="0" width="993" height="1080" extended-state="6" />
+    <frame x="13" y="49" width="1277" height="846" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2368728" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18218623" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection Results" weight="0.32970297" />
-      <window_info anchor="bottom" id="Messages" weight="0.32970297" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3108911" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3108911" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.52061856" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -259,11 +245,14 @@
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.23366337" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Console" order="12" weight="0.32970297" />
+      <window_info anchor="bottom" id="Inspection Results" order="13" weight="0.32970297" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.32970297" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Cargo" order="3" weight="0.32819384" />
-      <window_info active="true" anchor="right" id="Database" order="4" visible="true" weight="0.32912722" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32912722" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,7 +303,27 @@
     <MESSAGE value="Use Tera to parse the posts" />
     <MESSAGE value="Make the export work (without hardcoded folders)" />
     <MESSAGE value="Fix published_at date is not in seconds UNIX_EPOCH time preventing chrono formatters from working in the template." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix published_at date is not in seconds UNIX_EPOCH time preventing chrono formatters from working in the template." />
+    <MESSAGE value="List images in the rendered html output" />
+    <option name="LAST_COMMIT_MESSAGE" value="List images in the rendered html output" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>json.to_string()</expression-string>
+        <language-id>Rust</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>json</expression-string>
+        <language-id>Rust</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>json[0]</expression-string>
+        <language-id>Rust</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src/libstd/fs.rs">
@@ -444,25 +453,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/OneDrive-2019-03-27/content/data/kkostov.ghost.2015-10-28.json">
+    <entry file="file://$USER_HOME$/Downloads/OneDrive-2019-03-27/kkostov.ghost.2016-05-10.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="299" column="873" selection-start-line="299" selection-start-column="865" selection-end-line="299" selection-end-column="873" />
+        <state relative-caret-position="196">
+          <caret line="627" column="69" selection-start-line="627" selection-start-column="33" selection-end-line="627" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="142" column="32" selection-start-line="142" selection-start-column="32" selection-end-line="142" selection-end-column="32" />
-          <folding>
-            <element signature="e#4526#5418#0" />
-          </folding>
+    <entry file="das://1368614b-f6d0-4ce1-93ee-b790c29758da/schema/main/table/posts">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="html LIKE '%2016-02-12-10_05_38-New-Project%'" />
+            <filter text="html LIKE '%&lt;img%'" />
+          </filtering>
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1368614b-f6d0-4ce1-93ee-b790c29758da/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/OneDrive-2019-03-27/content/data/kkostov.ghost.2015-10-28.json" />
+    <entry file="file://$USER_HOME$/Downloads/OneDrive-2019-03-27/content/data/kkostov.ghost.2016-05-10.json2.json" />
+    <entry file="file://$USER_HOME$/Downloads/OneDrive-2019-03-27/content/data/kkostov.ghost.2015-10-28.bakjson">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/OneDrive-2019-03-27/content/data/kkostov.ghost.2016-05-10.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="11" lean-forward="true" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="732">
+          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

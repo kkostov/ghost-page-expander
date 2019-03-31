@@ -61,11 +61,17 @@ fn get_database(path: &String) -> Option<Value> {
         if let Ok(data_file) = data_file {
             if let Some(extension) = data_file.path().extension().and_then(OsStr::to_str) {
                 if extension == "json" {
+                    println!("importing file {:?}", data_file.path());
                     let mut data = String::new();
                     if let Ok(mut file) = File::open(data_file.path()) {
                         if let Ok(_) = file.read_to_string(&mut data) {
                             let v: Value = serde_json::from_str(&data).expect("failed to read json");
-                            return Some(v);
+
+
+                            return Some(v["db"]
+                                .as_array()
+                                .expect("invalid json format, expected a root 'db' array.")
+                                [0].clone());
                         }
                     }
                 }
@@ -88,6 +94,7 @@ fn parse_root(path: &String, templates_path: &String, output_path: &String) {
 
     if let Some(json) = get_database(path) {
         if let Some(posts) = json["data"]["posts"].as_array() {
+            println!("expanding {} posts", posts.len());
             for post in posts {
 
                 if let Some(timestamp) = post["published_at"].as_i64() {
