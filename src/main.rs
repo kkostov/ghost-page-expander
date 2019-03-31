@@ -110,8 +110,12 @@ fn parse_root(path: &String, templates_path: &String, output_path: &String) {
                     context.insert("published_at", &published_at); // so the chrono formatters in the template can work
 
 
-                    let content = render_content(templates_path, TEMPLATE_NAME_POST, &context);
-                    let _ = get_img_links(&content);
+                    let mut content = render_content(templates_path, TEMPLATE_NAME_POST, &context);
+
+                    let links = get_img_links(&content);
+                    let content_path = Path::new(path);
+                    move_img_links(&mut content, &links, &post_folder_path, &content_path);
+
                     write_content(&content, &post_folder_path);
 
                 } else {
@@ -201,4 +205,39 @@ fn get_img_links(content: &String) -> Vec<MediaLink> {
     }
 
     results
+}
+
+/// Copies or downloads external media into the post folder path and updates the content
+/// so that the source path point to the new locations
+fn move_img_links(content: &mut String, links: &Vec<MediaLink>, write_dir_path: &Path, content_path: &Path) {
+
+    for (i, img) in links.iter().enumerate() {
+        if img.url.starts_with("http") {
+            // download
+        } else if img.url.starts_with("/content") {
+            // in html the url is absolute, adding a '.' to make it relative
+            let img_url = format!(".{}", &img.url);
+
+            // in html the url includes the "/content" prefix
+            let original = content_path.parent().unwrap().join(&img_url).canonicalize().unwrap();
+
+
+            if let Some(extension) = original.extension().and_then(OsStr::to_str) {
+                let new_name = format!("pic{}.{}", i, extension.to_lowercase());
+                // update the content
+                println!("replacing '{}'", &content[img.position.start..img.position.end]);
+                content.replace_range(
+                    img.position.start..img.position.end,
+                    format!("<img src=\"{}\" alt=\"\" />", format!("./{}", new_name)).as_str());
+
+                // copy the file
+                let copy = write_dir_path.join(new_name);
+                println!("copying {:?} to {:?}", original, copy);
+                fs::copy(original, copy).expect("failed to copy image");
+            }
+        } else {
+            println!("incompatible media link source {:?}. Leaving unchanged.", img.url);
+        }
+    }
+
 }
