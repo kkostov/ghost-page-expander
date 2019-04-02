@@ -99,10 +99,11 @@ fn parse_root(path: &String, templates_path: &String, output_path: &String) {
 
                 if let Some(timestamp) = post["published_at"].as_i64() {
 
-                    println!("working post");
+                    println!("parsing post {}", post["id"]);
 
                     let post_folder = get_content_folder(timestamp);
                     let post_folder_path = Path::new(output_path).join(post_folder);
+                    clear_write_path(&post_folder_path);
 
 
                     let mut context = Context::new();
@@ -153,29 +154,32 @@ fn render_content(
     }
 }
 
-/// Writes the content string to disk
-fn write_content(content: &String, write_dir_path: &Path) {
+/// Removes any existing folders from the destination path and ensures the directory exists by
+/// recursively creating it
+fn clear_write_path(write_dir_path: &Path) {
     // ensure the folder doesn't exist (and it's empty)
     if write_dir_path.exists() {
         fs::remove_dir_all(write_dir_path).expect("failed to delete output path");
     }
 
-    // create the folder and write out the index
     match fs::create_dir_all(write_dir_path) {
-        Ok(_) => {
-            let output_file_path = write_dir_path.join(OUTPUT_PAGE_FILENAME);
-            match File::create(output_file_path) {
-                Ok(mut file) => {
-                    file.write_all(content.as_bytes()).expect("failed to write to file");
-                },
-                Err(err) => {
-                    panic!("failed to create file {:?} in output path {:?} {:?}", OUTPUT_PAGE_FILENAME, write_dir_path, err);
-                },
-            }
-
-        },
+        Ok(_) => (),
         Err(err) => {
             panic!("failed to create output path {:?} {:?}", write_dir_path, err);
+        },
+    }
+}
+
+
+/// Writes the content string to disk
+fn write_content(content: &String, write_dir_path: &Path) {
+    let output_file_path = write_dir_path.join(OUTPUT_PAGE_FILENAME);
+    match File::create(output_file_path) {
+        Ok(mut file) => {
+            file.write_all(content.as_bytes()).expect("failed to write to file");
+        },
+        Err(err) => {
+            panic!("failed to create file {:?} in output path {:?} {:?}", OUTPUT_PAGE_FILENAME, write_dir_path, err);
         },
     }
 }
@@ -218,15 +222,14 @@ fn move_img_links(content: &mut String, links: &Vec<MediaLink>, write_dir_path: 
         if img.url.starts_with("http") {
             // download
         } else if img.url.starts_with("/content") {
-            // in html the url is absolute, adding a '.' to make it relative
-            let img_url = format!(".{}", &img.url);
 
-            // in html the url includes the "/content" prefix
-            let original = content_path.parent().unwrap().join(&img_url).canonicalize().unwrap();
+            //TODO: use path joins instead
+            let original_p = format!("{}{}", &content_path.display(), &img.url.replace("/content/", "/"));
+            let original = Path::new(&original_p);
 
-
+            println!("original at {}", original.display());
             if let Some(extension) = original.extension().and_then(OsStr::to_str) {
-                let new_name = format!("pic{}.{}", i, extension.to_lowercase());
+                let new_name = format!("pic{}.{}", i, extension);
                 let new_tag = format!("<img src=\"{}\" alt=\"\" />", format!("./{}", new_name));
 
 
@@ -245,8 +248,10 @@ fn move_img_links(content: &mut String, links: &Vec<MediaLink>, write_dir_path: 
 
                 // copy the file
                 let copy = write_dir_path.join(new_name);
-                println!("copying {:?} to {:?}", original, copy);
-                fs::copy(original, copy).expect("failed to copy image");
+                println!("$ cp {:?} {:?}", original, copy);
+
+                File::create(&copy).expect("failed to create copy");
+                fs::copy(&original, &copy).expect("failed to copy file");
             }
         } else {
             println!("incompatible media link source {:?}. Leaving unchanged.", img.url);
