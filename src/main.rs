@@ -99,6 +99,8 @@ fn parse_root(path: &String, templates_path: &String, output_path: &String) {
 
                 if let Some(timestamp) = post["published_at"].as_i64() {
 
+                    println!("working post");
+
                     let post_folder = get_content_folder(timestamp);
                     let post_folder_path = Path::new(output_path).join(post_folder);
 
@@ -210,6 +212,7 @@ fn get_img_links(content: &String) -> Vec<MediaLink> {
 /// Copies or downloads external media into the post folder path and updates the content
 /// so that the source path point to the new locations
 fn move_img_links(content: &mut String, links: &Vec<MediaLink>, write_dir_path: &Path, content_path: &Path) {
+    let mut offset: i64 = 0;
 
     for (i, img) in links.iter().enumerate() {
         if img.url.starts_with("http") {
@@ -224,11 +227,21 @@ fn move_img_links(content: &mut String, links: &Vec<MediaLink>, write_dir_path: 
 
             if let Some(extension) = original.extension().and_then(OsStr::to_str) {
                 let new_name = format!("pic{}.{}", i, extension.to_lowercase());
+                let new_tag = format!("<img src=\"{}\" alt=\"\" />", format!("./{}", new_name));
+
+
+                let start = img.position.start as i64 + offset;
+                let end = img.position.end as i64 + offset;
+
+                offset = offset + new_tag.len() as i64 - (img.position.end - img.position.start) as i64;
+
                 // update the content
-                println!("replacing '{}'", &content[img.position.start..img.position.end]);
+                println!("{} start: {}, end: {}", i, start, end);
+                println!("replacing '{}'", &content[start as usize..end as usize]);
+
                 content.replace_range(
-                    img.position.start..img.position.end,
-                    format!("<img src=\"{}\" alt=\"\" />", format!("./{}", new_name)).as_str());
+                    start as usize..end as usize,
+                    new_tag.as_str());
 
                 // copy the file
                 let copy = write_dir_path.join(new_name);
