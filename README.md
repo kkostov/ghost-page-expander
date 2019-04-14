@@ -12,3 +12,5 @@ Build and run using cargo.
 
 `$ ./page-expander "/path/to/ghost/blog/content" "/path/to/the/templates/folder/*.html" "/path/to/output/folder"`
 
+* The ghost blog content export should contain a json back-up of the database in the `data` folder.
+
